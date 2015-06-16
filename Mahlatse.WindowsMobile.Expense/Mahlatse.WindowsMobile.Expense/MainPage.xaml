@@ -6,9 +6,59 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
-    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
+    DataContext="{Binding Main, Source={StaticResource Locator}}" Loaded="PhoneApplicationPage_Loaded">
+	<Page.Resources>
+		<ControlTemplate x:Key="ListBoxClaimsTemplate" TargetType="ListBox">
+			<StackPanel>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+				<TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+			</StackPanel>
+		</ControlTemplate>
+		<ControlTemplate x:Key="ListBoxControlTemplate1" TargetType="ListBox">
+			<Grid>
+				<TextBlock HorizontalAlignment="Left" Height="42" Margin="10,10,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Width="98"/>
+				<Button Content="Button" HorizontalAlignment="Left" Height="22" Margin="113,10,0,0" VerticalAlignment="Top" Width="55" RenderTransformOrigin="0.558,0.086"/>
+			</Grid>
+		</ControlTemplate>
+		<Style x:Key="ListBoxItemStyle1" TargetType="ListBoxItem"/>
+		<DataTemplate x:Key="DataTemplate1">
+			<StackPanel Orientation="Horizontal">
+				<TextBlock TextWrapping="Wrap" Text="TextBlock" HorizontalAlignment="Left"/>
+				<TextBlock TextWrapping="Wrap" Text="TextBlock" HorizontalAlignment="Left"/>
+				<TextBlock TextWrapping="Wrap" Text="TextBlock" HorizontalAlignment="Left"/>
+				<Button Content="Button" HorizontalAlignment="Left" Height="20"/>
+			</StackPanel>
+		</DataTemplate>
+	</Page.Resources>
 
-    <Grid>
+    <Grid x:Name="LayoutRoot">
 
+        <Grid.ChildrenTransitions>
+            <TransitionCollection>
+                <EntranceThemeTransition/>
+            </TransitionCollection>
+        </Grid.ChildrenTransitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <!-- Title Panel -->
+        <StackPanel Grid.Row="0" Margin="19,10,0,501" Grid.RowSpan="2">
+            <TextBlock Text="MY EXPENSE APPLICATION" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
+            <TextBlock Text="Claims List" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+        </StackPanel>
+        <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,144,19,-1">
+        	<StackPanel HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,69,0,10" Width="352">
+        		<ListBox Height="334" Margin="0,0,-0.333,0" ItemsSource="{Binding AllExpenseClaims}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}" ItemTemplate="{StaticResource DataTemplate1}"/>
+        		<Button Content="ADD EXPENSE CLAIM" HorizontalAlignment="Left" Height="70" Margin="30,0,0,0" Width="263" Background="#FF993030"/>
+        	</StackPanel>
+        </Grid>
+
+        <!--TODO: Content should be placed within the following grid-->
     </Grid>
 </Page>

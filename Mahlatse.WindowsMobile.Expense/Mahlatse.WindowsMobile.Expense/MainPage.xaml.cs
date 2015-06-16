@@ -44,5 +44,10 @@ namespace Mahlatse.WindowsMobile.Expense
             // If you are using the NavigationHelper provided by some templates,
             // this event is handled for you.
         }
+
+        private void PhoneApplicationPage_Loaded(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

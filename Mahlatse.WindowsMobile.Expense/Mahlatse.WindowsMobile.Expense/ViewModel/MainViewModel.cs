@@ -1,4 +1,8 @@
 using GalaSoft.MvvmLight;
+using Mahlatse.WindowsMobile.Expense.Message;
+using Mahlatse.WindowsMobile.Expense.Model;
+using Mahlatse.WindowsMobile.Expense.Service.Interface;
+using System.Collections.ObjectModel;
 
 namespace Mahlatse.WindowsMobile.Expense.ViewModel
 {
@@ -19,16 +23,83 @@ namespace Mahlatse.WindowsMobile.Expense.ViewModel
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
+        /// 
+        private IExpenseClaimService _explenseClaimService;
         public MainViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
+            IExpenseClaimService _explenseClaimService;
+            if (IsInDesignMode)
+            {
+                // Code runs in Blend --> create design time data.
+                _explenseClaimService = new Design.DesignExpenseClaimService();
+            }
+            else
+            {
+                // Code runs "for real"
+                _explenseClaimService = new Service.Implementation.ExpenseClaimService();
+            }
+
+            _explenseClaimService.List(result =>
+                {
+                    AllExpenseClaims = new ObservableCollection<ExpenseClaim>(result);
+                });
         }
+        public const string AllExpensesPropertyChanged = "AllExpenseClaims";
+        public string ApplicationTitle
+        {
+            get
+            {
+                return "Expense Claim MVVM Light";
+            }
+        }
+
+        public string PageName
+        {
+            get
+            {
+                return "Expense Claims:";
+            }
+        }
+
+        private ObservableCollection<ExpenseClaim> _expenseClaims = null;
+        public string Welcome
+        {
+            get
+            {
+                return "Welcome to My Expense Cliam Page";
+            }
+        }
+
+        public ObservableCollection<ExpenseClaim> AllExpenseClaims
+        {
+            get 
+            {
+                return _expenseClaims;
+            }
+            set
+            {
+                _expenseClaims = value;
+                RaisePropertyChanged(AllExpensesPropertyChanged);
+            }
+        }
+
+        #region methods
+
+        private object ReceiveMessage(NavigateToPageMessage action)
+        {
+            var page = string.Format("/View/{0}View.xaml", action.PageName);
+
+            if (action.PageName == "Main")
+            {
+                page = "/MainPage.xaml";
+            }
+
+            return null;
+            //NavigationService.Navigate(
+            //   new System.Uri(page,
+            //         System.UriKind.Relative));
+            //return null;
+        }
+        #endregion
     }
 }
