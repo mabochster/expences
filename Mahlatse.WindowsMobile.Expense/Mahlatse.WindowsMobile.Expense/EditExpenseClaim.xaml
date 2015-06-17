@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding EditExpenseClaim, Source={StaticResource Locator}}" Loaded="PhoneApplicationPage_Loaded">
+    DataContext="{Binding EditExpenseClaim, Source={StaticResource Locator}}">
 
     <Grid x:Name="LayoutRoot">
 
@@ -30,6 +30,12 @@
 
         <!--TODO: Content should be placed within the following grid-->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
+            <TextBlock HorizontalAlignment="Left" Height="58" TextWrapping="Wrap" Text="{Binding ExpenseClaim.Name}" VerticalAlignment="Top" Width="352"/>
+            <TextBlock HorizontalAlignment="Left" Height="82" Margin="0,143,0,0" TextWrapping="Wrap" Text="{Binding ExpenseClaim.Amount}" VerticalAlignment="Top" Width="352"/>
+            <TextBlock HorizontalAlignment="Left" Height="75" Margin="0,230,0,0" TextWrapping="Wrap" Text="{Binding ExpenseClaim.Description}" VerticalAlignment="Top" Width="352"/>
+            <TextBlock HorizontalAlignment="Left" Margin="0,310,0,116" TextWrapping="Wrap" Text="{Binding EditExpenseClaim.ExpenseClaim.IsVerified, Mode=OneWay}" Width="362"/>
+            <TextBlock HorizontalAlignment="Left" Height="75" Margin="0,390,0,0" TextWrapping="Wrap" Text="{Binding ExpenseClaim.Id}" VerticalAlignment="Top" Width="362"/>
+            <Button Content="Button" HorizontalAlignment="Left" Height="27" Margin="10,443,0,0" VerticalAlignment="Top" Width="352" Command="{Binding EditExpenseClaimCommand, Mode=OneWay}"/>
 
         </Grid>
     </Grid>

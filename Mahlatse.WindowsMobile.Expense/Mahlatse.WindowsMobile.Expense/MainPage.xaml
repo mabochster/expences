@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding Main, Source={StaticResource Locator}}" Loaded="PhoneApplicationPage_Loaded">
+    DataContext="{Binding Main, Source={StaticResource Locator}}">
 	<Page.Resources>
 		<ControlTemplate x:Key="ListBoxClaimsTemplate" TargetType="ListBox">
 			<StackPanel>
@@ -32,6 +32,13 @@
 				<Button Content="Button" HorizontalAlignment="Left" Height="20"/>
 			</StackPanel>
 		</DataTemplate>
+		<DataTemplate x:Key="DataTemplate2">
+			<StackPanel Height="73" Width="313" Orientation="Horizontal">
+				<TextBlock Height="53" Margin="0,10,0,0" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top" Width="100"/>
+				<TextBlock Height="53" Margin="0,10,0,0" TextWrapping="Wrap" Text="{Binding IsVerified}" VerticalAlignment="Top" Width="107"/>
+				<TextBlock Height="53" Margin="0,10,0,0" TextWrapping="Wrap" Text="{Binding Amount}" VerticalAlignment="Top" Width="98"/>
+			</StackPanel>
+		</DataTemplate>
 	</Page.Resources>
 
     <Grid x:Name="LayoutRoot">
@@ -54,8 +61,8 @@
         </StackPanel>
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,144,19,-1">
         	<StackPanel HorizontalAlignment="Right" VerticalAlignment="Stretch" Margin="0,69,0,10" Width="352">
-        		<ListBox Height="334" Margin="0,0,-0.333,0" ItemsSource="{Binding AllExpenseClaims}" ItemContainerStyle="{StaticResource ListBoxItemStyle1}" ItemTemplate="{StaticResource DataTemplate1}"/>
-        		<Button Content="ADD EXPENSE CLAIM" HorizontalAlignment="Left" Height="70" Margin="30,0,0,0" Width="263" Background="#FF993030"/>
+        		<Button Content="ADD EXPENSE CLAIM" HorizontalAlignment="Left" Height="70" Margin="30,0,0,0" Width="263" Background="#FF993030" Command="{Binding AddExpenseClaimCommand, Mode=OneWay}"/>
+                <ListView Height="337" Margin="10,0,9.667,0" ItemsSource="{Binding AllExpenseClaims}" ItemTemplate="{StaticResource DataTemplate2}"  SelectedItem="{Binding ExpenseClaim, Mode=TwoWay}"/>
         	</StackPanel>
         </Grid>
 

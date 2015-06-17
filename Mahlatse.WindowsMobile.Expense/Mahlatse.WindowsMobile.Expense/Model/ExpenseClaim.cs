@@ -18,6 +18,10 @@ namespace Mahlatse.WindowsMobile.Expense.Model
         public bool AllowUserDelete { get; set; }
         public bool StatusId { get; set; }
         public int ModifiedUserId { get; set; }
-        public UserProfile User { get; set; }
+
+        public override string ToString()
+        {
+            return this.Name + " , " + this.Amount.ToString("R#.##") + " , " + (this.Description.Length > 10 ? this.Description.Substring(0, 7) + "..." : this.Description);
+        }
     }
 }

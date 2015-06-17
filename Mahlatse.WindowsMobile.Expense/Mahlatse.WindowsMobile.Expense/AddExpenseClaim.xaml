@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
-    DataContext="{Binding AddExpenseClaim, Source={StaticResource Locator}}" Loaded="PhoneApplicationPage_Loaded">
+    DataContext="{Binding AddExpenseClaim, Source={StaticResource Locator}}">
 
     <Grid x:Name="LayoutRoot">
 
@@ -25,12 +25,19 @@
         <!-- Title Panel -->
         <StackPanel Grid.Row="0" Margin="19,0,0,0">
             <TextBlock Text="MY APPLICATION" Style="{ThemeResource TitleTextBlockStyle}" Margin="0,12,0,0"/>
-            <TextBlock Text="page title" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
+            <TextBlock Text="Add Expense" Margin="0,-6.5,0,26.5" Style="{ThemeResource HeaderTextBlockStyle}" CharacterSpacing="{ThemeResource PivotHeaderItemCharacterSpacing}"/>
         </StackPanel>
 
         <!--TODO: Content should be placed within the following grid-->
         <Grid Grid.Row="1" x:Name="ContentRoot" Margin="19,9.5,19,0">
 
         </Grid>
+        <StackPanel HorizontalAlignment="Left" Height="489" Margin="28,4.833,0,0" Grid.Row="1" VerticalAlignment="Top" Width="362">
+            <TextBox HorizontalAlignment="Left" Height="60" Margin="10,0,0,0" TextWrapping="Wrap" Width="342" Text="{Binding ExpenseClaim.Name, Mode=TwoWay}" PlaceholderText="Enter Expense Name" Background="#FFF7F7F7"/>
+            <TextBox HorizontalAlignment="Left" Height="140" Margin="10,0,0,0" TextWrapping="Wrap" Text="{Binding ExpenseClaim.Description, Mode=TwoWay}" Width="342" PlaceholderText="Enter Description"/>
+            <TextBox HorizontalAlignment="Left" Height="68" Margin="10,0,0,0" TextWrapping="Wrap" Text="{Binding ExpenseClaim.Amount, Mode=TwoWay}" Width="342" PlaceholderText="Enter Amount Here"/>
+            <CheckBox Content="Is Vrefied" HorizontalAlignment="Left" Height="65" Margin="42,0,0,0" Width="77" Foreground="White" IsChecked="{Binding ExpenseClaim.IsVerified, Mode=TwoWay}"/>
+        	<Button Content="Save" HorizontalAlignment="Left" Height="98" Margin="42,0,0,0" Width="272" Command="{Binding AddExpenseClaimCommand, Mode=OneWay}"/>
+        </StackPanel>
     </Grid>
 </Page>

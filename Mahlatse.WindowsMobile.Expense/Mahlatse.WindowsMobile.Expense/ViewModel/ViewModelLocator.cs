@@ -14,6 +14,8 @@
 
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Ioc;
+using Mahlatse.WindowsMobile.Expense.Service.Implementation;
+using Mahlatse.WindowsMobile.Expense.Service.Interface;
 using Microsoft.Practices.ServiceLocation;
 
 namespace Mahlatse.WindowsMobile.Expense.ViewModel
@@ -42,7 +44,18 @@ namespace Mahlatse.WindowsMobile.Expense.ViewModel
             ////    SimpleIoc.Default.Register<IDataService, DataService>();
             ////}
 
+            if (ViewModelBase.IsInDesignModeStatic)
+            {
+                SimpleIoc.Default.Register<INavigationService, Design.DesignNavigationService>();
+            }
+            else
+            {
+                SimpleIoc.Default.Register<INavigationService>(() => new NavigationService());
+            }
+
             SimpleIoc.Default.Register<MainViewModel>();
+            SimpleIoc.Default.Register<AddExpenseClaimViewModel>();
+            SimpleIoc.Default.Register<EditExpenseClaimViewModel>();
         }
 
         public MainViewModel Main
@@ -52,7 +65,24 @@ namespace Mahlatse.WindowsMobile.Expense.ViewModel
                 return ServiceLocator.Current.GetInstance<MainViewModel>();
             }
         }
-        
+
+        public EditExpenseClaimViewModel EditExpenseClaim
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<EditExpenseClaimViewModel>();
+            }
+        }
+
+        public AddExpenseClaimViewModel AddExpenseClaim
+        {
+            get
+            {
+                return ServiceLocator.Current.GetInstance<AddExpenseClaimViewModel>();
+            }
+        }
+
+
         public static void Cleanup()
         {
             // TODO Clear the ViewModels

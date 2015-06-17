@@ -1,8 +1,11 @@
 using GalaSoft.MvvmLight;
+using Mahlatse.WindowsMobile.Expense.Common;
 using Mahlatse.WindowsMobile.Expense.Message;
 using Mahlatse.WindowsMobile.Expense.Model;
+using Mahlatse.WindowsMobile.Expense.Service.Implementation;
 using Mahlatse.WindowsMobile.Expense.Service.Interface;
 using System.Collections.ObjectModel;
+using Windows.UI.Xaml.Controls;
 
 namespace Mahlatse.WindowsMobile.Expense.ViewModel
 {
@@ -24,10 +27,12 @@ namespace Mahlatse.WindowsMobile.Expense.ViewModel
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         /// 
+
         private IExpenseClaimService _explenseClaimService;
-        public MainViewModel()
+        private INavigationService _iNavigationService;
+        public MainViewModel(INavigationService _iNavigationService)
         {
-            IExpenseClaimService _explenseClaimService;
+
             if (IsInDesignMode)
             {
                 // Code runs in Blend --> create design time data.
@@ -36,13 +41,18 @@ namespace Mahlatse.WindowsMobile.Expense.ViewModel
             else
             {
                 // Code runs "for real"
-                _explenseClaimService = new Service.Implementation.ExpenseClaimService();
+                //_explenseClaimService = new Service.Implementation.ExpenseClaimService();
+                _explenseClaimService = new Design.DesignExpenseClaimService();
             }
+
+            this._iNavigationService = _iNavigationService;
 
             _explenseClaimService.List(result =>
                 {
                     AllExpenseClaims = new ObservableCollection<ExpenseClaim>(result);
                 });
+
+            AddExpenseClaimCommand = new RelayCommand(() => AddExpenseClaim());
         }
         public const string AllExpensesPropertyChanged = "AllExpenseClaims";
         public string ApplicationTitle
@@ -82,24 +92,37 @@ namespace Mahlatse.WindowsMobile.Expense.ViewModel
                 RaisePropertyChanged(AllExpensesPropertyChanged);
             }
         }
+       //seclected item
+        private ExpenseClaim _expenseClaim;
+        public const string ExpenseClaimChanged = "ExpenseClaim";
 
-        #region methods
-
-        private object ReceiveMessage(NavigateToPageMessage action)
+        public ExpenseClaim ExpenseClaim
         {
-            var page = string.Format("/View/{0}View.xaml", action.PageName);
-
-            if (action.PageName == "Main")
+            get
             {
-                page = "/MainPage.xaml";
+                return _expenseClaim;
             }
-
-            return null;
-            //NavigationService.Navigate(
-            //   new System.Uri(page,
-            //         System.UriKind.Relative));
-            //return null;
+            set
+            {
+                _expenseClaim = value;
+                //RaisePropertyChanged(ExpenseClaimChanged);
+                _iNavigationService.Navigate(typeof(AddEditExpenseClaim),ExpenseClaim);
+            }
         }
+
+
+        #region relay methods
+        private void AddExpenseClaim()
+        {
+            _iNavigationService.Navigate(typeof(AddExpenseClaim));
+        }
+
+        public RelayCommand AddExpenseClaimCommand
+        {
+            get;
+            private set;
+        }
+
         #endregion
     }
 }
